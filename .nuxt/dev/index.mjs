@@ -469,11 +469,13 @@ const errorHandler = (async function errorhandler(error, event) {
   event.node.res.end(await res.text());
 });
 
-const _lazy_FczjgU = () => Promise.resolve().then(function () { return movies$1; });
+const _lazy_EqgKPB = () => Promise.resolve().then(function () { return top$1; });
+const _lazy_ccleu1 = () => Promise.resolve().then(function () { return popular$1; });
 const _lazy_AeckyB = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/api/movies', handler: _lazy_FczjgU, lazy: true, middleware: false, method: undefined },
+  { route: '/api/movies/top', handler: _lazy_EqgKPB, lazy: true, middleware: false, method: undefined },
+  { route: '/api/movies/popular', handler: _lazy_ccleu1, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_AeckyB, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_AeckyB, lazy: true, middleware: false, method: undefined }
 ];
@@ -591,16 +593,32 @@ const errorDev = /*#__PURE__*/Object.freeze({
   template: template
 });
 
-const movies = defineEventHandler((event) => {
+const top = defineEventHandler(async (event) => {
   const { movieDBKey } = useRuntimeConfig();
+  const data = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${movieDBKey}`).then((response) => response.json()).then((data2) => data2);
+  console.log(data);
   return {
-    api: movieDBKey
+    movies: data
   };
 });
 
-const movies$1 = /*#__PURE__*/Object.freeze({
+const top$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  default: movies
+  default: top
+});
+
+const popular = defineEventHandler(async (event) => {
+  const { movieDBKey } = useRuntimeConfig();
+  const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${movieDBKey}`).then((response) => response.json()).then((data2) => data2);
+  console.log(data);
+  return {
+    movies: data
+  };
+});
+
+const popular$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: popular
 });
 
 const appRootId = "__nuxt";
