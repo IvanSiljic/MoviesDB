@@ -9,15 +9,28 @@
 
     onMounted(async () => {
         await getNowPlayingMovies()
-        windowWidth.value = document.querySelector(".carousel").offsetWidth
+        window.addEventListener('resize', ()  => windowWidth.value = document.querySelector(".carousel").clientWidth)
     })
     
     const onSlideNext = () => {
-        activeSlide.value++
+        windowWidth.value = document.querySelector(".carousel").clientWidth
+
+        if (activeSlide.value == nowPlayingMovies.value.results.length - 1) {
+            activeSlide.value = 0
+        } else {
+           activeSlide.value++
+        }
     }
 
     const onSlideBefore = () => {
-        activeSlide.value += -1
+        windowWidth.value = document.querySelector(".carousel").clientWidth
+
+        if (activeSlide.value == 0) {
+            activeSlide.value = nowPlayingMovies.value.results.length - 1
+        } else {
+            activeSlide.value += -1
+        }
+
     }
 </script>
 
@@ -33,7 +46,10 @@
         </div>
         <div class="carousel-inner" :style="{transform: 'translateX(-' + (windowWidth * activeSlide) + 'px)'}">
             <div class="carousel-inner-card" v-for="movie in nowPlayingMovies.results" :key="movie">
-                <img :src="`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`" />
+                <img class="carousel-inner-card-background" :src="`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`" />
+                <NuxtLink class="carousel-inner-card-link link" :to="`/movie/${movie.id}`">
+                    <h1>{{ movie.title }}</h1>
+                </NuxtLink>
             </div>
         </div>
     </div>
@@ -55,11 +71,24 @@
                 width: 100%;
                 display: inline-flex;
                 
-                img {
+                &-background {
                     width: 100%;
                 }
             }
         }
+    }
+
+    .carousel-inner-card-link {
+        display: flex;
+        align-items: flex-end;
+        justify-content: left;
+        position: absolute;
+        padding: 1rem;
+        padding-left: 5rem;
+        width: 100%;
+        bottom: 0;
+        color: white;
+        text-shadow: #000000 0px 0px 5px;
     }
 
     .button {
@@ -70,6 +99,7 @@
         width: inherit;
         max-width: 1500px;
         height: inherit;
+        pointer-events: none;
     }
 
     button {
@@ -78,6 +108,8 @@
         padding: 0;
         border: none;
         background-color: rgba($color: #000000, $alpha: 0);
+        pointer-events: auto;
+        cursor: pointer;
 
         i {
             font-size: 3rem;
