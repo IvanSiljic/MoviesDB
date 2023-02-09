@@ -596,7 +596,6 @@ const errorDev = /*#__PURE__*/Object.freeze({
 const top = defineEventHandler(async (event) => {
   const { movieDBKey } = useRuntimeConfig();
   const data = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${movieDBKey}`).then((response) => response.json()).then((data2) => data2);
-  console.log(data);
   return {
     movies: data
   };
@@ -610,7 +609,6 @@ const top$1 = /*#__PURE__*/Object.freeze({
 const popular = defineEventHandler(async (event) => {
   const { movieDBKey } = useRuntimeConfig();
   const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${movieDBKey}`).then((response) => response.json()).then((data2) => data2);
-  console.log(data);
   return {
     movies: data
   };

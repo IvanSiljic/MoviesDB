@@ -13,24 +13,43 @@
 </script>
 
 <template>
-    <h1 class="sectionTitle">Popular Movies</h1>
-    <div class="movieSlider">
-        <MovieCard v-for="m in popularMovies.results" :movie="m"></MovieCard>
-    </div>
-
-    <h1 class="sectionTitle">Top rated</h1>
-    <div class="movieSlider">
-        <MovieCard v-for="m in topMovies.results" :movie="m"></MovieCard>
+    <div class="container">
+        <div class="container-movies">
+            <h1 class="container-movies-title">Popular Movies</h1>
+            <MovieCard v-for="m in popularMovies.results" :movie="m"></MovieCard>
+        </div>
+        
+        <div class="container-movies">
+            <h1 class="container-movies-title">Top rated</h1>
+            <MovieCard v-for="m in topMovies.results" :movie="m"></MovieCard>
+        </div>
     </div>
 </template>
 
 
-<style scoped>
-    .sectionTitle{
-        display: block;
-        padding-left: 5rem;
-    }
-    .movieSlider{
+<style scoped lang="scss">
+    $font-stack: Helvetica, sans-serif;
+
+    .container{
         display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 100%;
+        font-family: $font-stack;
+        
+        &-movies {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1500px;
+            
+            &-title {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+        }
     }
 </style>

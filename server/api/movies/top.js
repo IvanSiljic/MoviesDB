@@ -5,8 +5,6 @@ export default defineEventHandler(async (event) => {
     .then((response) => response.json())
     .then((data) => data)
     
-    console.log(data)
-    
     return {
       movies: data
     }
