@@ -5,7 +5,8 @@ export const useMovieStore = defineStore('movieStore', {
     state: () => ({
         popularMovies: [],
         topMovies: [],
-        nowPlayingMovies: []
+        nowPlayingMovies: [],
+        movie: null
     }),
     actions: {
         getPopularMovies() {
@@ -39,6 +40,16 @@ export const useMovieStore = defineStore('movieStore', {
                 })
             })
 
+        },
+        async getMovieById(id) {
+            return new Promise((resolve, reject) => {
+                axios.get(`http://localhost:3000/api/movie/${id}`).then(({ data }) => {
+                    this.movie = data
+                    resolve(data)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
         }
     }
 })

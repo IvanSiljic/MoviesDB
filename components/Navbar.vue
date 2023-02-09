@@ -23,6 +23,9 @@
         justify-content: center;
         padding: 0;
         width: 100%;
+        position: absolute;
+        z-index: 50;
+        text-shadow: #fff 0 0 5px;
 
         &-links {
             display: flex;
@@ -38,7 +41,7 @@
     }
 
     .link {
-        padding: 1rem;
+        margin: 1rem;
     }
 
     .logo {

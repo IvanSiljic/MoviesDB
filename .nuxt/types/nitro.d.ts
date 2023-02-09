@@ -11,6 +11,9 @@ declare module 'nitropack' {
     '/api/movies/now_playing': {
       'default': Awaited<ReturnType<typeof import('../../server/api/movies/now_playing').default>>
     }
+    '/api/movie/:id': {
+      'default': Awaited<ReturnType<typeof import('../../server/api/movie/[id]').default>>
+    }
     '/__nuxt_error': {
       'default': Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>
     }
