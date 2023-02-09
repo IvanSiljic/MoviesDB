@@ -2,9 +2,11 @@
     <div class="navbar">
         <div class="navbar-links">
             <div class="navbar-links-center">
-                <NuxtLink class="link" to="/">Logo</NuxtLink>
+                <NuxtLink class="link" to="/">
+                    <i class="material-symbols-rounded">movie</i>
+                </NuxtLink>
             </div>
-            <div class="navbar-links-center">
+            <div class="navbar-links-center logo">
                 <NuxtLink class="link" to="/">Home</NuxtLink>
                 <NuxtLink class="link" to="/about">About</NuxtLink>
             </div>
@@ -37,5 +39,9 @@
 
     .link {
         padding: 1rem;
+    }
+
+    .logo {
+        position: absolute;
     }
 </style>

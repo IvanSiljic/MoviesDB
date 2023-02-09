@@ -1,7 +1,6 @@
 <script setup>
     import { useMovieStore } from '../store/MovieStore'
     import { storeToRefs } from 'pinia'
-    import MovieCard from '../components/MovieCard.vue'
 
     const { getPopularMovies, getTopMovies } = useMovieStore()
     const { popularMovies, topMovies } = storeToRefs(useMovieStore())
@@ -14,6 +13,10 @@
 
 <template>
     <div class="container">
+        <div class="contaier-movies">
+            <NowPlayingMovies/>
+        </div>
+
         <div class="container-movies">
             <h1 class="container-movies-title">Popular Movies</h1>
             <MovieCard v-for="m in popularMovies.results" :movie="m"></MovieCard>

@@ -2,7 +2,6 @@
     <div>
         <header>
             <Navbar/>
-            <LatestMovies />
         </header>
 
         <slot/>
