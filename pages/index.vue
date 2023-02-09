@@ -28,15 +28,12 @@
 
 
 <style scoped lang="scss">
-    $font-stack: Helvetica, sans-serif;
-
     .container{
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: space-around;
         width: 100%;
-        font-family: $font-stack;
         
         &-movies {
             display: flex;

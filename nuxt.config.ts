@@ -5,5 +5,8 @@ export default defineNuxtConfig({
     ],
     runtimeConfig: {
         movieDBKey: process.env.MOVIE_DB_KEY
-    }
+    },
+    css: [
+        '@/assets/css/style.scss'
+    ]
 })

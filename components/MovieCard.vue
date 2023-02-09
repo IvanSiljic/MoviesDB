@@ -36,7 +36,6 @@
 </script>
 
 <style scoped lang="scss">
-    $font-stack: Helvetica, sans-serif;
     .link {
         text-decoration: none;
         color: black;
@@ -52,7 +51,6 @@
         border-radius: 1rem;
         height: 10rem;
         width: 25rem;
-        font-family: $font-stack;
 
         span {
             font-size: small;

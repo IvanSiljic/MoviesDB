@@ -471,11 +471,13 @@ const errorHandler = (async function errorhandler(error, event) {
 
 const _lazy_EqgKPB = () => Promise.resolve().then(function () { return top$1; });
 const _lazy_ccleu1 = () => Promise.resolve().then(function () { return popular$1; });
+const _lazy_1R5cYM = () => Promise.resolve().then(function () { return now_playing$1; });
 const _lazy_AeckyB = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '/api/movies/top', handler: _lazy_EqgKPB, lazy: true, middleware: false, method: undefined },
   { route: '/api/movies/popular', handler: _lazy_ccleu1, lazy: true, middleware: false, method: undefined },
+  { route: '/api/movies/now_playing', handler: _lazy_1R5cYM, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_AeckyB, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_AeckyB, lazy: true, middleware: false, method: undefined }
 ];
@@ -617,6 +619,19 @@ const popular = defineEventHandler(async (event) => {
 const popular$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   default: popular
+});
+
+const now_playing = defineEventHandler(async (event) => {
+  const { movieDBKey } = useRuntimeConfig();
+  const data = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${movieDBKey}`).then((response) => response.json()).then((data2) => data2);
+  return {
+    movies: data
+  };
+});
+
+const now_playing$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: now_playing
 });
 
 const appRootId = "__nuxt";

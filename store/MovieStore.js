@@ -4,7 +4,8 @@ import axios from 'axios'
 export const useMovieStore = defineStore('movieStore', {
     state: () => ({
         popularMovies: [],
-        topMovies: []
+        topMovies: [],
+        nowPlayingMovies: []
     }),
     actions: {
         getPopularMovies() {
@@ -21,6 +22,17 @@ export const useMovieStore = defineStore('movieStore', {
             return new Promise((resolve, reject) => {
                 axios.get('api/movies/top').then(({ data }) => {
                     this.topMovies = data?.movies
+                    resolve(data)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
+
+        },
+        getNowPlayingMovies() {
+            return new Promise((resolve, reject) => {
+                axios.get('api/movies/now_playing').then(({ data }) => {
+                    this.nowPlayingMovies = data?.movies
                     resolve(data)
                 }).catch((err) => {
                     reject(err)

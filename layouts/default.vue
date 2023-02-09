@@ -1,7 +1,14 @@
 <template>
     <div>
-        <Navbar/>
+        <header>
+            <Navbar/>
+            <LatestMovies />
+        </header>
 
         <slot/>
+
+        <footer>
+
+        </footer>
     </div>
 </template>
