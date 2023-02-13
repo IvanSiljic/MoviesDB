@@ -1,7 +1,7 @@
 <script setup>
     import { useMovieStore } from '../store/MovieStore'
     import { storeToRefs } from 'pinia'
-    import profileSVG from '../public/profile.svg'
+    import profileSVG from '/profile.svg'
 
     const { getCreditsById } = useMovieStore()
     const { cast } = storeToRefs(useMovieStore())
@@ -31,7 +31,7 @@
 <style scoped lang="scss">
     .cast {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         flex-direction: row;
         overflow-x: scroll;
         padding: 1rem;
