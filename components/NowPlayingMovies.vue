@@ -1,9 +1,9 @@
 <script setup>
-    import { useMovieStore } from '../store/MovieStore'
+    import { useMoviesStore } from '../store/MoviesStore'
     import { storeToRefs } from 'pinia'
 
-    const { getNowPlayingMovies } = useMovieStore()
-    const { nowPlayingMovies } = storeToRefs(useMovieStore())
+    const { getNowPlayingMovies } = useMoviesStore()
+    const { nowPlayingMovies } = storeToRefs(useMoviesStore())
     const activeSlide = ref(0)
     const windowWidth = ref(null)
 

@@ -1,9 +1,9 @@
 <script setup>
-    import { useMovieStore } from '../store/MovieStore'
+    import { useMoviesStore } from '../store/MoviesStore'
     import { storeToRefs } from 'pinia'
 
-    const { getPopularMovies, getTopMovies } = useMovieStore()
-    const { popularMovies, topMovies } = storeToRefs(useMovieStore())
+    const { getPopularMovies, getTopMovies } = useMoviesStore()
+    const { popularMovies, topMovies } = storeToRefs(useMoviesStore())
 
     onMounted(async () => {
         await getTopMovies()
