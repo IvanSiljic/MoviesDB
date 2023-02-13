@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     modules: [
-        '@pinia/nuxt'
+        '@pinia/nuxt',
     ],
     app: {
         head: {
@@ -13,7 +13,7 @@ export default defineNuxtConfig({
         },
     },
     runtimeConfig: {
-        movieDBKey: process.env.MOVIE_DB_KEY
+        movieDBKey: process.env.MOVIE_DB_KEY,
     },
     css: [
         '@/assets/css/style.scss'

@@ -8,6 +8,6 @@ export default defineEventHandler(async (event) => {
     .then((data) => data)
     
     return {
-      movies: data
+      movie: data
     }
 })

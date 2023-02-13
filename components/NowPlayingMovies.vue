@@ -48,7 +48,7 @@
             <div class="carousel-inner-card" v-for="movie in nowPlayingMovies.results" :key="movie">
                 <img class="carousel-inner-card-background" :src="`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`" />
                 <NuxtLink class="carousel-inner-card-link link" :to="`/movie/${movie.id}`">
-                    <h1>{{ movie.title }}</h1>
+                    <div>{{ movie.title }}</div>
                 </NuxtLink>
             </div>
         </div>
@@ -79,15 +79,13 @@
     }
 
     .carousel-inner-card-link {
-        display: flex;
-        align-items: flex-end;
-        justify-content: left;
         position: absolute;
-        padding: 1rem;
-        padding-left: 5rem;
-        width: 100%;
+        margin: 2rem;
+        margin-left: 4rem;
         bottom: 0;
         color: white;
+        font-size: 2rem;
+        font-weight: bold;
         text-shadow: #000000 0px 0px 5px;
     }
 
