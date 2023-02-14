@@ -47,7 +47,9 @@
         flex-direction: row;
         justify-content: space-between;
         padding: 1rem;
-        margin: 1rem;
+        margin: 2rem;
+        margin-left: 0;
+        margin-top: 0;
         margin-bottom: 5rem;
         box-shadow: #999 0px 5px 10px;
         border-radius: 1rem;
