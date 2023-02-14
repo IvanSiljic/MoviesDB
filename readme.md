@@ -1,6 +1,6 @@
 # Deployed website
 
-https://63eb47aa54ed0b60f7cc1027--rad-cucurucho-c3b10e.netlify.app/
+https://rad-cucurucho-c3b10e.netlify.app/
 
 # Nuxt 3 Minimal Starter
 

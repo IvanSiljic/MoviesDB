@@ -6,7 +6,8 @@ export const useMovieStore = defineStore('movieStore', {
         movie: null,
         crew: null,
         cast: null,
-        reviews: null
+        reviews: null,
+        similar: []
     }),
     actions: {
         getMovieById(id) {
@@ -34,6 +35,16 @@ export const useMovieStore = defineStore('movieStore', {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/movie/reviews/${id}`).then(({ data }) => {
                     this.reviews = data?.credits?.results
+                    resolve(data)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
+        },
+        getSimilarById(id) {
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/movie/similar/${id}`).then(({ data }) => {
+                    this.similar = data?.credits?.results
                     resolve(data)
                 }).catch((err) => {
                     reject(err)
