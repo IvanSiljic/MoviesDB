@@ -1,3 +1,7 @@
+# Deployed website
+
+https://63eb47aa54ed0b60f7cc1027--rad-cucurucho-c3b10e.netlify.app/
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
