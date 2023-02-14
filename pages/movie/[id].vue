@@ -1,6 +1,7 @@
 <script setup>
     const { id } = useRoute().params
 </script>
+
 <template>
     <Poster :movieId="id"/>
     <div class="container">
@@ -12,7 +13,6 @@
         </div>
     </div>
 </template>
-    
 
 <style scoped lang="scss">
     .container {
@@ -26,5 +26,4 @@
             max-width: 1500px;
         }
     }
-    
 </style>
