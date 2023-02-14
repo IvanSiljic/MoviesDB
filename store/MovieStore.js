@@ -33,7 +33,7 @@ export const useMovieStore = defineStore('movieStore', {
         getReviewsById(id) {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/movie/reviews/${id}`).then(({ data }) => {
-                    this.reviews = data?.results
+                    this.reviews = data?.credits?.results
                     resolve(data)
                 }).catch((err) => {
                     reject(err)
