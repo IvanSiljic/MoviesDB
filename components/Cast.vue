@@ -34,6 +34,7 @@
         justify-content: flex-start;
         flex-direction: row;
         overflow-x: scroll;
+        overflow-y: hidden;
         padding: 1rem;
     }
     .card {
