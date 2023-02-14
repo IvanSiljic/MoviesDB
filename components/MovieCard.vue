@@ -9,8 +9,10 @@
                     <div>
                         {{ movie.title }}
                     </div>
-                    <div class="card-right-top-rating">
-                        {{  movie.vote_average }}
+                    <div class="card-right-top-rating" :style="{
+                        backgroundColor: `rgb(${255 - movie?.vote_average * 10}, ${25.5 * movie?.vote_average}, 0)`
+                    }">
+                        {{  movie?.vote_average.toFixed(1) }}
                     </div>
                 </div>
                 <div>
