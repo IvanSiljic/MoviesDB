@@ -2,12 +2,13 @@
     import { useMovieStore } from '../../store/MovieStore'
     import { storeToRefs } from 'pinia'
 
-    const { getSimilarById } = useMovieStore()
-    const { similar } = storeToRefs(useMovieStore())
+    const { getSimilarById, getReviewsById } = useMovieStore()
+    const { similar, reviews } = storeToRefs(useMovieStore())
     const { id } = useRoute().params
 
     onMounted(async () => {
         await getSimilarById(id)
+        await getReviewsById(id)
     })
 </script>
 
@@ -18,6 +19,13 @@
             <h1>Movie Cast</h1>
             <div class="cast">
                 <Cast :movieId="id" />
+            </div>
+        </div>
+
+        <div class="container-reviews">
+            <h1>Reviews</h1>
+            <div class="container-reviews-overflow">
+                <Reviews v-for="review in reviews" :review="review" />
             </div>
         </div>
         
@@ -40,6 +48,21 @@
 
         &-cast {
             max-width: 1500px;
+        }
+
+        &-reviews {
+            width: 100%;
+            max-width: 1500px;
+            
+            &-overflow {
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                padding: 1rem;
+                padding-left: 0;
+            }
         }
 
         &-similar {
