@@ -18,7 +18,7 @@
 
         <div class="review-bottom">
             <div class="review-bottom-text" v-html="marked(review.content)"/>
-            <NuxtLink class="review-more link" :to="review.url"> Read More</NuxtLink>
+            <NuxtLink class="review-more link" :to="review.url"> View More</NuxtLink>
         </div>
     </div>
 </template>
