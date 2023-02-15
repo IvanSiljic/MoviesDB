@@ -7,7 +7,7 @@
 
     onMounted(async () => {
         await getTopMovies()
-        await getPopularMovies()
+        await getPopularMovies({ page: 1})
     })
 </script>
 

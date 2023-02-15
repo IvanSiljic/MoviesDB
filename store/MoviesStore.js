@@ -8,9 +8,15 @@ export const useMoviesStore = defineStore('moviesStore', {
         nowPlayingMovies: []
     }),
     actions: {
-        getPopularMovies() {
+        getPopularMovies(payload) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/movies/popular`).then(({ data }) => {
+                axios.get(`/api/movies/popular`, {
+                    params: {
+                        page: payload?.page
+                    }
+                })
+                
+                .then(({ data }) => {
                     this.popularMovies = data?.movies
                     resolve(data)
                 }).catch((err) => {
