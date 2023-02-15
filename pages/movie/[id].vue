@@ -17,7 +17,7 @@
     <div class="container">
         <div class="container-cast">
             <h1>Movie Cast</h1>
-            <div class="cast">
+            <div class="container-cast-overflow">
                 <Cast :movieId="id" />
             </div>
         </div>
@@ -45,9 +45,24 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
+        
+        h1 {
+            padding-left: 1rem;
+        }
 
         &-cast {
+            width: 100%;
             max-width: 1500px;
+            
+            &-overflow {
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                padding: 1rem;
+                padding-left: 0;
+            }
         }
 
         &-reviews {
@@ -66,6 +81,7 @@
         }
 
         &-similar {
+            width: 100%;
             max-width: 1500px;
 
             &-overflow {
