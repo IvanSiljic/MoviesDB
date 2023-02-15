@@ -25,23 +25,24 @@
         width: 100%;
         position: absolute;
         z-index: 50;
-        text-shadow: #fff 0 0 5px;
+        text-shadow: #000 0 0 5px;
 
         &-links {
             display: flex;
             justify-content: space-around;
             max-width: 1500px;
             width: 100%;
-
+            
             &-center {
                 display: flex;
                 justify-content: space-between;
             }
         }
     }
-
+    
     .link {
         margin: 1rem;
+        color: white;
     }
 
     .logo {

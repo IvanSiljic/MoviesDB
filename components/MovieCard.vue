@@ -9,11 +9,7 @@
                     <div>
                         {{ movie.title }}
                     </div>
-                    <div class="card-right-top-rating" :style="{
-                        backgroundColor: `rgb(${255 - movie?.vote_average * 10}, ${25.5 * movie?.vote_average}, 0)`
-                    }">
-                        {{  movie?.vote_average.toFixed(1) }}
-                    </div>
+                    <Rating :rating="movie.vote_average" />
                 </div>
                 <div>
                     <span>
@@ -86,14 +82,6 @@
                 justify-content: space-between;
                 font-size: larger;
                 font-weight: bold;
-
-                &-rating {
-                    background-color: #facc15;
-                    padding: 0.4rem;
-                    border-radius: 0.5rem;
-                    height: fit-content;
-                    font-size: medium;
-                }
             }
 
             &-bottom {

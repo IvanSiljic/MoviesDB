@@ -13,32 +13,22 @@
 </script>
 
 <template>
-    <div class="cast">
-        <div class="card" v-for="actor in cast">
-            <img :src="`${ actor.profile_path ? 'https://image.tmdb.org/t/p/w500/' + actor.profile_path : profileSVG}`" alt=""/>
-            <div class="card-text">
-                <div class="card-text-name">
-                    {{ actor.name }}
-                </div>
-                <div class="card-text-character">
-                    {{ actor.character }}
-                </div>
+    <div class="card" v-for="actor in cast">
+        <img :src="`${ actor.profile_path ? 'https://image.tmdb.org/t/p/w500/' + actor.profile_path : profileSVG}`" alt=""/>
+        <div class="card-text">
+            <div class="card-text-name">
+                {{ actor.name }}
+            </div>
+            <div class="card-text-character">
+                {{ actor.character }}
             </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-    .cast {
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: row;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        padding: 1rem;
-    }
     .card {
-        margin-right: 2rem;
+        margin: 1rem;
         height: 24rem;
         border-radius: 1rem;
         box-shadow: #aaa 0 0 15px;

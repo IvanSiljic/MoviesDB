@@ -14,9 +14,7 @@ export const useMoviesStore = defineStore('moviesStore', {
                     params: {
                         page: payload?.page
                     }
-                })
-                
-                .then(({ data }) => {
+                }).then(({ data }) => {
                     this.popularMovies = data?.movies
                     resolve(data)
                 }).catch((err) => {
@@ -24,9 +22,13 @@ export const useMoviesStore = defineStore('moviesStore', {
                 })
               })
         },
-        getTopMovies() {
+        getTopMovies(payload) {
             return new Promise((resolve, reject) => {
-                axios.get(`/api/movies/top`).then(({ data }) => {
+                axios.get(`/api/movies/top`, {
+                    params: {
+                        page: payload?.page
+                    }
+                }).then(({ data }) => {
                     this.topMovies = data?.movies
                     resolve(data)
                 }).catch((err) => {
