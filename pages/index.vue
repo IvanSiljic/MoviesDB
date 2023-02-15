@@ -6,7 +6,7 @@
     const { popularMovies, topMovies } = storeToRefs(useMoviesStore())
 
     onMounted(async () => {
-        await getTopMovies()
+        await getTopMovies({ page: 1})
         await getPopularMovies({ page: 1})
     })
 </script>
