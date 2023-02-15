@@ -5,7 +5,8 @@ export const useMoviesStore = defineStore('moviesStore', {
     state: () => ({
         popularMovies: [],
         topMovies: [],
-        nowPlayingMovies: []
+        nowPlayingMovies: [],
+        genres: []
     }),
     actions: {
         getPopularMovies(payload) {
@@ -47,6 +48,16 @@ export const useMoviesStore = defineStore('moviesStore', {
                 })
             })
 
+        },
+        getGenres() {
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/movies/genres`).then(({ data }) => {
+                    this.genres = data?.genres.genres
+                    resolve(data)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
         }
     }
 })

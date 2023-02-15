@@ -18,17 +18,17 @@
         </div>
 
         <div class="container-movies">
-            <NuxtLink class="container-movies-title link" to="/movies/popular?page=1">Popular Movies</NuxtLink>
+            <NuxtLink class="container-movies-title link" to="/popular-movies/1">Popular Movies</NuxtLink>
 
             <MovieCard v-for="m in popularMovies.results" :movie="m"></MovieCard>
             
-            <NuxtLink class="container-movies-link link" to="/movies/popular?page=1">View More</NuxtLink>
+            <NuxtLink class="container-movies-link link" to="/popular-movies/1">View More</NuxtLink>
         </div>
         
         <div class="container-movies">
-            <h1 class="container-movies-title">Top rated</h1>
+            <NuxtLink class="container-movies-title link" to="/top-movies/1">Top Movies</NuxtLink>
             <MovieCard v-for="m in topMovies.results" :movie="m"></MovieCard>
-            <NuxtLink class="container-movies-link link" to="/movies/top?page=1">View More</NuxtLink>
+            <NuxtLink class="container-movies-link link" to="/top-movies/1">View More</NuxtLink>
         </div>
     </div>
 </template>

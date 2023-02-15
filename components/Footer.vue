@@ -1,6 +1,6 @@
 <script setup>
-    import movieDB from "../public/movieDB.svg"
-    import githubWhite from "../public/githubWhite.svg"
+    import movieDB from "/movieDB.svg"
+    import githubWhite from "/githubWhite.svg"
 </script>
 
 <template>
