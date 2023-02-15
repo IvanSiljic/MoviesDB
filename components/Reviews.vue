@@ -16,7 +16,10 @@
             <Rating v-if="review.author_details.rating !== null" :rating="review.author_details.rating" />
         </div>
 
-        <div class="review-bottom" v-html="marked(review.content)" />
+        <div class="review-bottom">
+            <div class="review-bottom-text" v-html="marked(review.content)"/>
+            <NuxtLink class="review-more link" :to="review.url"> Read More</NuxtLink>
+        </div>
     </div>
 </template>
 
@@ -54,13 +57,26 @@
         }
 
         &-bottom {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
+            position: relative;
             overflow: hidden;
             padding-top: 1rem;
             width: calc(1500px - 6rem);
             max-width: calc(100vw - 7rem);
+            height: 8rem;
+            overflow: hidden;
+        }
+
+        &-more {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            color: #555;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(#fff, 0.8), white);
+            width: 100%;
+            height: 3rem;
         }
     }
 
