@@ -30,19 +30,13 @@
         &-links {
             display: flex;
             justify-content: space-between;
-            max-width: 1250px;
             width: 100%;
-
-            &-left {
-                display: flex;
-                align-items: center;
-                font-size: 1rem;
-            }
+            max-width: 1500px;
             
             &-center {
                 display: flex;
                 justify-content: space-between;
-                font-size: 1rem;
+                width: fit-content;
             }
         }
     }
@@ -50,6 +44,5 @@
     .link {
         padding: 1rem;
         color: white;
-        font-size: 1rem;
     }
 </style>
