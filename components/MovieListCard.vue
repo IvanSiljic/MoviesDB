@@ -35,10 +35,9 @@
     .movie{
         display: flex;
         padding: 0.5rem;
-        width: 100%;
         border-radius: 1rem;
         box-shadow: #999 0px 0px 10px;
-        margin: 2rem;
+        margin: 1rem;
         
         img {
             width: 10rem;
