@@ -29,23 +29,20 @@
 
         &-links {
             display: flex;
-            justify-content: space-around;
-            max-width: 1500px;
+            justify-content: space-between;
             width: 100%;
+            max-width: 1500px;
             
             &-center {
                 display: flex;
                 justify-content: space-between;
+                width: fit-content;
             }
         }
     }
     
     .link {
-        margin: 1rem;
+        padding: 1rem;
         color: white;
-    }
-
-    .logo {
-        position: absolute;
     }
 </style>
