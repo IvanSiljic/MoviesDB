@@ -14,33 +14,36 @@
 <template>
     <div class="backdrop" :style="{backgroundImage: 'url(https://image.tmdb.org/t/p/w1280/' + movie?.backdrop_path + ')'}">
         <div class="backdrop-cover">
-            <div class="backdrop-cover-left">
-                <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" alt="">
-            </div>
-            <div class="backdrop-cover-right">
-                <div class="backdrop-cover-right-title">
-                    {{ movie?.title }}
-                    <span>{{ `(${movie?.release_date.split('-')[0]})` }}</span>
-                    <span class="backdrop-cover-right-title-subtitle">
-                        <div v-for="genre in movie?.genres">
-                            {{ genre.name + ","}} &nbsp;
-                        </div>
-                        <div>
-                            {{ `${Math.floor(movie?.runtime / 60)}h ${movie?.runtime % 60}m` }}
-                        </div>
-                    </span>
+            <div class="backdrop-cover-center">
+
+                <div class="backdrop-cover-left">
+                    <img :src="`https://image.tmdb.org/t/p/w500${movie?.poster_path}`" alt="">
                 </div>
-                <div class="backdrop-cover-right-rating" :style="{
-                    backgroundColor: `rgb(${255 - movie?.vote_average * 10}, ${25.5 * movie?.vote_average}, 0)`
-                }">
-                    {{ movie?.vote_average.toFixed(1) }}
-                </div>
-                <div class="backdrop-cover-right-tagline">
-                    {{ movie?.tagline }}
-                </div>
-                <div class="backdrop-cover-right-overview">
-                    <h2>Overview</h2>
-                    {{ movie?.overview }}
+                <div class="backdrop-cover-right">
+                    <div class="backdrop-cover-right-title">
+                        {{ movie?.title }}
+                        <span>{{ `(${movie?.release_date.split('-')[0]})` }}</span>
+                        <span class="backdrop-cover-right-title-subtitle">
+                            <div v-for="genre in movie?.genres">
+                                {{ genre.name + ","}} &nbsp;
+                            </div>
+                            <div>
+                                {{ `${Math.floor(movie?.runtime / 60)}h ${movie?.runtime % 60}m` }}
+                            </div>
+                        </span>
+                    </div>
+                    <div class="backdrop-cover-right-rating" :style="{
+                        backgroundColor: `rgb(${255 - movie?.vote_average * 10}, ${25.5 * movie?.vote_average}, 0)`
+                    }">
+                        {{ movie?.vote_average.toFixed(1) }}
+                    </div>
+                    <div class="backdrop-cover-right-tagline">
+                        {{ movie?.tagline }}
+                    </div>
+                    <div class="backdrop-cover-right-overview">
+                        <h2>Overview</h2>
+                        {{ movie?.overview }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,17 +58,27 @@
         width: 100%;
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: center;
         
         &-cover {
             display: flex;
             justify-content: center;
-            align-items: center;
             background-image: linear-gradient(to right, rgba(#181818, 0.8), rgba(#181818, 0.5));
-            padding: 6rem;
             padding-bottom: 2rem;
+            padding-top: 6rem;
             width: 100%;
             
+            &-center {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-grow: 0;
+                width: 100%;
+                max-width: 1500px;
+            }
+            
             &-left {
+                margin-left: 1rem;
                 margin-right: 3rem;
                 
                 img {
@@ -77,7 +90,7 @@
 
             &-right {
                 max-width: 1000px;
-                
+
                 &-title {
                     color: white;
                     font-size: 1.5rem;
