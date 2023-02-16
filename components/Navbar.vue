@@ -7,8 +7,8 @@
                 </NuxtLink>
             </div>
             <div class="navbar-links-center logo">
-                <NuxtLink class="link" to="/top-movies/1">Top Movies</NuxtLink>
-                <NuxtLink class="link" to="/popular-movies/1">Popular Movies</NuxtLink>
+                <NuxtLink class="link" to="/top-movies">Top Movies</NuxtLink>
+                <NuxtLink class="link" to="/popular-movies">Popular Movies</NuxtLink>
             </div>
             <div>
             </div>
@@ -29,6 +29,7 @@
 
         &-links {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             width: 100%;
             max-width: 1500px;
