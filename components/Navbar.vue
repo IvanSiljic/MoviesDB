@@ -1,14 +1,14 @@
 <template>
     <div class="navbar">
         <div class="navbar-links">
-            <div class="navbar-links-center">
+            <div class="navbar-links-left">
                 <NuxtLink class="link" to="/">
                     <i class="material-symbols-rounded">movie</i>
                 </NuxtLink>
             </div>
             <div class="navbar-links-center logo">
-                <NuxtLink class="link" to="/">Home</NuxtLink>
-                <NuxtLink class="link" to="/about">About</NuxtLink>
+                <NuxtLink class="link" to="/top-movies/1">Top Movies</NuxtLink>
+                <NuxtLink class="link" to="/popular-movies/1">Popular Movies</NuxtLink>
             </div>
             <div>
             </div>
@@ -29,23 +29,27 @@
 
         &-links {
             display: flex;
-            justify-content: space-around;
-            max-width: 1500px;
+            justify-content: space-between;
+            max-width: 1250px;
             width: 100%;
+
+            &-left {
+                display: flex;
+                align-items: center;
+                font-size: 1rem;
+            }
             
             &-center {
                 display: flex;
                 justify-content: space-between;
+                font-size: 1rem;
             }
         }
     }
     
     .link {
-        margin: 1rem;
+        padding: 1rem;
         color: white;
-    }
-
-    .logo {
-        position: absolute;
+        font-size: 1rem;
     }
 </style>
