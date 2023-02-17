@@ -55,7 +55,7 @@
         page.value += 1
 
         await filterMovies()
-        loadingMore = false
+        loadingMore.value = false
     }
 
     const removeGenre = (genre) => {
