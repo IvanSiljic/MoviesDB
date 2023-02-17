@@ -10,17 +10,18 @@
     const { genres } = storeToRefs(useMoviesStore())
     const movies = ref([])
     const page = ref(1)
+    const totalPages = ref(0)
     const loadingList = ref(true)
     const loadingMore = ref(false)
 
     watch(activeGenre, () => {
-        router.push({ query: {genre: activeGenre.value?.map(el => el.id).toString()} })
+        router.push({ query: { genre: activeGenre.value?.map(el => el?.id).toString()} })
     }, { deep: true})
     
     onMounted(async () => {
         await getGenres()
 
-        activeGenre.value = activeGenre.value !== undefined ? activeGenre.value.map(el => genres.value.find(genre => genre.id == el)) : []
+        activeGenre.value = activeGenre.value !== undefined && activeGenre.value[0] !== '' ? activeGenre.value.map(el => genres.value.find(genre => genre.id == el)) : []
         
         genres.value = genres.value.filter((el) => !activeGenre.value?.includes(el))
 
@@ -29,14 +30,17 @@
         loadingList.value = false
     })
 
-    const getMovies = async (page) => {
+    const getMovies = async (reqPage) => {
         let appendMovies = []
 
         if (type == 'popular') {
-            appendMovies = await getPopularMovies({ page, genres: activeGenre.value.map(el => el.id).toString() })
+            appendMovies = await getPopularMovies({ page: reqPage, genres: activeGenre.value.map(el => el?.id).toString() })
         } else if (type == 'top') {
-            appendMovies = await getTopMovies({ page, genres: activeGenre.value.map(el => el.id).toString() })
+            appendMovies = await getTopMovies({ page: reqPage, genres: activeGenre.value.map(el => el?.id).toString() })
         }
+
+        page.value = appendMovies.page
+        totalPages.value = appendMovies.total_pages
 
         movies.value.push.apply(movies.value, appendMovies.movies.results)
     }
@@ -109,7 +113,7 @@
                 <div class="movie-list" v-for="movie in movies" :to="`/movie/${movie.id}`">
                     <MovieListCard :movie="movie" />
                 </div>
-                <MoreButton :disabled="page == 500" @click="loadMore" :loading="loadingMore" text="Load More"/>
+                <MoreButton :disabled="page == totalPages" @click="loadMore" :loading="loadingMore" text="Load More"/>
             </div>
         </div>
     </div>
