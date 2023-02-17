@@ -13,22 +13,28 @@
 
 <template>
     <div class="container">
-        <div class="contaier-movies">
+        <div class="contaier-poster">
             <NowPlayingMovies/>
         </div>
 
         <div class="container-movies">
             <NuxtLink class="container-movies-title link" to="/popular-movies">Popular Movies</NuxtLink>
 
-            <MovieCard v-for="m in popularMovies.results" :movie="m"></MovieCard>
+            <MovieCard v-for="m in popularMovies.results?.slice(0, 6)" :movie="m"></MovieCard>
             
-            <NuxtLink class="container-movies-link link" to="/popular-movies">View More</NuxtLink>
+            <NuxtLink class="container-movies-link link" to="/popular-movies">
+                <MoreButton text="View More"/>
+            </NuxtLink>
         </div>
         
         <div class="container-movies">
             <NuxtLink class="container-movies-title link" to="/top-movies">Top Movies</NuxtLink>
-            <MovieCard v-for="m in topMovies.results" :movie="m"></MovieCard>
-            <NuxtLink class="container-movies-link link" to="/top-movies">View More</NuxtLink>
+
+            <MovieCard v-for="m in topMovies.results?.slice(0, 6)" :movie="m"></MovieCard>
+            
+            <NuxtLink class="container-movies-link link" to="/top-movies">
+                <MoreButton text="View More"/>
+            </NuxtLink>
         </div>
     </div>
 </template>
@@ -39,17 +45,16 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        justify-content: space-around;
         width: 100%;
-        
+
         &-movies {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1500px;
+            justify-content: space-between;
+            padding: 1rem;
+            max-width: 1468px;
             overflow: hidden;
-            height: 40rem;
             position: relative;
             
             &-title {
@@ -62,16 +67,9 @@
             }
 
             &-link {
-                position: absolute;
                 display: flex;
                 justify-content: center;
-                bottom: 0;
-                font-size: 2rem;
-                color: black;
-                text-shadow: white 0 0 15px;
                 width: 100%;
-                height: 4rem;
-                background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(255, 255, 255, 0.8), white);
             }
         }
     }

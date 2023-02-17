@@ -1,11 +1,11 @@
 <script setup>
-    const { loadin } = defineProps(['loading'])
+    const { loading, text } = defineProps(['loading', 'text'])
 </script>
 
 <template>
     <button class="button">
         <LoadSpinner v-if="loading" />
-        {{ loading ? '' : 'Load More' }}
+        {{ loading ? '' : text }}
     </button>
 </template>
 

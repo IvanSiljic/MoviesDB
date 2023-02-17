@@ -10,6 +10,7 @@
     const activeGenre = ref([])
     const loadingList = ref(true)
     const loadingMore = ref(false)
+    const loadPage = ref(1)
 
     onMounted(async () => {
         await getGenres()
@@ -25,58 +26,68 @@
         loadingList.value = false
     })
 
-    const filterMovies = async () => {
-        let filterMovies = []
+    const filterMovies = async (searchPage) => {
+        let appendMovies = []
 
-        for (let i = 1; i <= page.value; i++) {
-            let appendMovies = []
-
-            if (type == 'popular') {
-                appendMovies = await getPopularMovies({ page: i })
-            } else if (type == 'top') {
-                appendMovies = await getTopMovies({ page: i })
-            }
-            
-            filterMovies.push(...appendMovies.movies.results)
+        if (type == 'popular') {
+            appendMovies = await getPopularMovies({ page: searchPage })
+        } else if (type == 'top') {
+            appendMovies = await getTopMovies({ page: searchPage })
         }
+        
+        appendMovies = appendMovies.movies.results
 
         for (let i = 0; i < activeGenre.value.length; i++) {
-            filterMovies = filterMovies.filter(movie => movie.genre_ids.includes(activeGenre.value[i].id))
-        } 
+            appendMovies = appendMovies.filter(movie => movie.genre_ids.includes(activeGenre.value[i].id))
+        }
         
-        movies.value = filterMovies
+        movies.value.push.apply(movies.value, appendMovies)
+        
+        if (movies.value.length < 20 * loadPage.value && page.value < 500) {
+            filterMovies(searchPage + 1)
+        } else {
+            page.value = searchPage
+        }
+
         loadingList.value = false
     }
 
     const loadMore = async () => {
         loadingMore.value = true
-        page.value += 1
+        loadPage.value += 1
 
-        await filterMovies()
+        await filterMovies(page.value + 1)
+        
         loadingMore.value = false
     }
 
     const removeGenre = (genre) => {
         page.value = 1
+        loadPage.value = 1
         loadingList.value = true
         genres.value.push(genre)
         genres.value = genres.value.sort((a, b) => a.name.localeCompare(b.name))
 
         activeGenre.value = activeGenre.value.filter((el) => el.id != genre.id)
 
-        filterMovies()
+        movies.value = []
+
+        filterMovies(1)
         loadingList.value = false
     }
 
     const addGenre = (genre) => {
         page.value = 1
+        loadPage.value = 1
         loadingList.value = true
         activeGenre.value.push(genre)
         activeGenre.value = activeGenre.value.sort((a, b) => a.name.localeCompare(b.name))
 
         genres.value = genres.value.filter((el) => el.id != genre.id)
         
-        filterMovies()
+        movies.value = []
+
+        filterMovies(1)
         loadingList.value = false
     }
 </script>
@@ -107,7 +118,7 @@
                 <div class="movie-list" v-for="movie in movies" :to="`/movie/${movie.id}`">
                     <MovieListCard :movie="movie" />
                 </div>
-                <MoreButton :disabled="page == 500" @click="loadMore" :loading="loadingMore"/>
+                <MoreButton :disabled="page == 500" @click="loadMore" :loading="loadingMore" text="Load More"/>
             </div>
         </div>
     </div>

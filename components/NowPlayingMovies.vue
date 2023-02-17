@@ -81,7 +81,7 @@
     .carousel-inner-card-link {
         position: absolute;
         margin: 2rem;
-        margin-left: 4rem;
+        margin-left: 1rem;
         bottom: 0;
         color: white;
         font-size: 2rem;
