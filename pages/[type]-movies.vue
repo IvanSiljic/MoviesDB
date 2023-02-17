@@ -23,11 +23,9 @@
         }
 
         loadingList.value = false
-        loadMore.value = false
     })
 
     const filterMovies = async () => {
-        loadingList.value = true
         let filterMovies = []
 
         for (let i = 1; i <= page.value; i++) {
@@ -59,21 +57,27 @@
     }
 
     const removeGenre = (genre) => {
+        page.value = 1
+        loadingList.value = true
         genres.value.push(genre)
         genres.value = genres.value.sort((a, b) => a.name.localeCompare(b.name))
 
         activeGenre.value = activeGenre.value.filter((el) => el.id != genre.id)
 
         filterMovies()
+        loadingList.value = false
     }
 
     const addGenre = (genre) => {
+        page.value = 1
+        loadingList.value = true
         activeGenre.value.push(genre)
         activeGenre.value = activeGenre.value.sort((a, b) => a.name.localeCompare(b.name))
 
         genres.value = genres.value.filter((el) => el.id != genre.id)
         
         filterMovies()
+        loadingList.value = false
     }
 </script>
 
