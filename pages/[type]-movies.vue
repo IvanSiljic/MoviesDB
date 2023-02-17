@@ -6,6 +6,7 @@
     const { getPopularMovies, getTopMovies, getGenres } = useMoviesStore()
     const { genres } = storeToRefs(useMoviesStore())
     const movies = ref({})
+    const filteredMovies = ref([])
     const page = ref(1)
     const activeGenre = ref([])
     
@@ -19,12 +20,21 @@
             movies.value = await getTopMovies({ page: page.value })
             movies.value = movies.value.movies.results
         }
+        filteredMovies.value = movies.value
     })
 
-    const loadMore = async () => {
-        page.value += 1
+   const filterMovies = () => {
+        filteredMovies.value = movies.value
+       
+        for (let i = 0; i < activeGenre.value.length; i++) {
+           filteredMovies.value = filteredMovies.value.filter(movie => movie.genre_ids.includes(activeGenre.value[i].id))
+        } 
+    }
 
+    const loadMore = async () => {
         let appendMovies = []
+        
+        page.value += 1
 
         if (type == 'popular') {
             appendMovies = await getPopularMovies({ page: page.value })
@@ -33,12 +43,10 @@
         }
 
         appendMovies = appendMovies.movies.results
-        
-        for (let i = 0; i < activeGenre.value.length; i++) {
-            appendMovies = appendMovies.filter(movie => movie.genre_ids.includes(activeGenre.value[i].id))
-        }
 
         movies.value.push.apply(movies.value, appendMovies)
+
+        filterMovies()
     }
 
     const removeGenre = (genre) => {
@@ -46,6 +54,8 @@
         genres.value = genres.value.sort((a, b) => a.name.localeCompare(b.name))
 
         activeGenre.value = activeGenre.value.filter((el) => el.id != genre.id)
+
+        filterMovies()
     }
 
     const addGenre = (genre) => {
@@ -53,8 +63,8 @@
         activeGenre.value = activeGenre.value.sort((a, b) => a.name.localeCompare(b.name))
 
         genres.value = genres.value.filter((el) => el.id != genre.id)
-
-        movies.value = movies.value.filter(movie => movie.genre_ids.includes(genre.id))
+        
+        filterMovies()
     }
 </script>
 
@@ -85,7 +95,7 @@
             </div>
 
             <div class="list-middle-right">
-                <div class="movie-list" v-for="movie in movies" :to="`/movie/${movie.id}`">
+                <div class="movie-list" v-for="movie in filteredMovies" :to="`/movie/${movie.id}`">
                     <MovieListCard :movie="movie" />
                 </div>
                 <button class="list-middle-right-more" :disabled="page == 500" @click="loadMore">
@@ -157,7 +167,6 @@
                     position: relative;
                     font-weight: 1000;
                     font-size: 1rem;
-                    box-shadow: #aaa 0 0 15px;
                     transition: all 250ms;
                     overflow: hidden;                   
                 }
