@@ -6,14 +6,16 @@ export const useMoviesStore = defineStore('moviesStore', {
         popularMovies: [],
         topMovies: [],
         nowPlayingMovies: [],
-        genres: []
+        genres: [],
+        search: []
     }),
     actions: {
         getPopularMovies(payload) {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/movies/popular`, {
                     params: {
-                        page: payload?.page
+                        page: payload?.page,
+                        genres: payload?.genres
                     }
                 }).then(({ data }) => {
                     this.popularMovies = data?.movies
@@ -27,7 +29,8 @@ export const useMoviesStore = defineStore('moviesStore', {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/movies/top`, {
                     params: {
-                        page: payload?.page
+                        page: payload?.page,
+                        genres: payload?.genres
                     }
                 }).then(({ data }) => {
                     this.topMovies = data?.movies
@@ -53,6 +56,16 @@ export const useMoviesStore = defineStore('moviesStore', {
             return new Promise((resolve, reject) => {
                 axios.get(`/api/movies/genres`).then(({ data }) => {
                     this.genres = data?.genres.genres
+                    resolve(data)
+                }).catch((err) => {
+                    reject(err)
+                })
+            })
+        },
+        getSearch(query) {
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/search`, { params: { q: query }}).then(({ data }) => {
+                    this.search = data?.movies.movies
                     resolve(data)
                 }).catch((err) => {
                     reject(err)

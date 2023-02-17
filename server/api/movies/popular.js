@@ -2,12 +2,13 @@ import axios from "axios"
 
 export default defineEventHandler(async (event) => {
     const { movieDBKey } = useRuntimeConfig()
-    const { page } = getQuery(event)
+    const { page, genres } = getQuery(event)
 
     const data = await axios.get('https://api.themoviedb.org/3/movie/popular', {
       params: {
         api_key: movieDBKey,
-        page: page
+        page: page,
+        with_genres: genres
       }
     })
     .then((data) => data.data)

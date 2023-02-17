@@ -2,69 +2,58 @@
     import { storeToRefs } from 'pinia';
     import { useMoviesStore } from '../store/MoviesStore'
 
+    const router = useRouter()
     const { type } = useRoute().params
+    const { genre } = useRoute().query
+    const activeGenre = ref(genre?.split(','))
     const { getPopularMovies, getTopMovies, getGenres } = useMoviesStore()
     const { genres } = storeToRefs(useMoviesStore())
-    const movies = ref({})
+    const movies = ref([])
     const page = ref(1)
-    const activeGenre = ref([])
     const loadingList = ref(true)
     const loadingMore = ref(false)
-    const loadPage = ref(1)
 
+    watch(activeGenre, () => {
+        router.push({ query: {genre: activeGenre.value?.map(el => el.id).toString()} })
+    }, { deep: true})
+    
     onMounted(async () => {
         await getGenres()
 
-        if (type == 'popular') {
-            movies.value = await getPopularMovies({ page: page.value })
-            movies.value = movies.value.movies.results
-        } else if (type == 'top') {
-            movies.value = await getTopMovies({ page: page.value })
-            movies.value = movies.value.movies.results
-        }
+        activeGenre.value = activeGenre.value !== undefined ? activeGenre.value.map(el => genres.value.find(genre => genre.id == el)) : []
+        
+        genres.value = genres.value.filter((el) => !activeGenre.value?.includes(el))
+
+        getMovies(1)
 
         loadingList.value = false
     })
 
-    const filterMovies = async (searchPage) => {
+    const getMovies = async (page) => {
         let appendMovies = []
 
         if (type == 'popular') {
-            appendMovies = await getPopularMovies({ page: searchPage })
+            appendMovies = await getPopularMovies({ page, genres: activeGenre.value.map(el => el.id).toString() })
         } else if (type == 'top') {
-            appendMovies = await getTopMovies({ page: searchPage })
-        }
-        
-        appendMovies = appendMovies.movies.results
-
-        for (let i = 0; i < activeGenre.value.length; i++) {
-            appendMovies = appendMovies.filter(movie => movie.genre_ids.includes(activeGenre.value[i].id))
-        }
-        
-        movies.value.push.apply(movies.value, appendMovies)
-        
-        if (movies.value.length < 20 * loadPage.value && page.value < 500) {
-            filterMovies(searchPage + 1)
-        } else {
-            page.value = searchPage
+            appendMovies = await getTopMovies({ page, genres: activeGenre.value.map(el => el.id).toString() })
         }
 
-        loadingList.value = false
+        movies.value.push.apply(movies.value, appendMovies.movies.results)
     }
 
     const loadMore = async () => {
         loadingMore.value = true
-        loadPage.value += 1
+        page.value += 1
 
-        await filterMovies(page.value + 1)
+        getMovies(page.value)
         
         loadingMore.value = false
     }
 
-    const removeGenre = (genre) => {
+    const removeGenre = async (genre) => {
         page.value = 1
-        loadPage.value = 1
         loadingList.value = true
+
         genres.value.push(genre)
         genres.value = genres.value.sort((a, b) => a.name.localeCompare(b.name))
 
@@ -72,14 +61,15 @@
 
         movies.value = []
 
-        filterMovies(1)
+        await getMovies(page.value)
+
         loadingList.value = false
     }
 
-    const addGenre = (genre) => {
+    const addGenre = async (genre) => {
         page.value = 1
-        loadPage.value = 1
         loadingList.value = true
+
         activeGenre.value.push(genre)
         activeGenre.value = activeGenre.value.sort((a, b) => a.name.localeCompare(b.name))
 
@@ -87,7 +77,8 @@
         
         movies.value = []
 
-        filterMovies(1)
+        await getMovies(page.value)
+
         loadingList.value = false
     }
 </script>
