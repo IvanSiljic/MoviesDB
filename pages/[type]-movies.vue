@@ -3,7 +3,7 @@
 
     const route = useRoute()
     const { type } = route.params
-    const { genre } = route.query
+    let { genre } = route.query
     const { getPopularMovies, getTopMovies } = useMoviesStore()
     const movies = ref([])
     const page = ref(1)
@@ -13,17 +13,19 @@
 
     watch(() => route.query, (query) => {
         movies.value = []
+
+        genre = query.genre
         
-        getMovies(1, query.genre)
+        getMovies(1)
     })
     
     onMounted(async () => {
-        await getMovies(1, genre)
+        await getMovies(1)
 
         loadingList.value = false
     })
 
-    const getMovies = async (reqPage, genre) => {
+    const getMovies = async (reqPage) => {
         let appendMovies = []
 
         if (type == 'popular') {
@@ -32,8 +34,8 @@
             appendMovies = await getTopMovies({ page: reqPage, genres: genre })
         }
 
-        page.value = appendMovies.page
-        totalPages.value = appendMovies.total_pages
+        page.value = appendMovies.movies.page
+        totalPages.value = appendMovies.movies.total_pages
 
         movies.value.push.apply(movies.value, appendMovies.movies.results)
     }
@@ -42,7 +44,9 @@
         loadingMore.value = true
         page.value += 1
 
-        getMovies(page.value, genre)
+        console.log(page.value)
+
+        await getMovies(page.value)
         
         loadingMore.value = false
     }
@@ -68,7 +72,7 @@
                 <div class="movie-list" v-for="movie in movies" :to="`/movie/${movie.id}`">
                     <MovieListCard :movie="movie" />
                 </div>
-                <MoreButton :disabled="page == totalPages" @click="loadMore" :loading="loadingMore" text="Load More"/>
+                <MoreButton :disable="page === totalPages" @click="loadMore" :loading="loadingMore" text="Load More"/>
             </div>
         </div>
     </div>

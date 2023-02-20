@@ -12,6 +12,8 @@
     onMounted(async () => {
         await getGenres()
 
+        activeGenre.value = genre !== undefined ? genre.split(',') : []
+
         activeGenre.value = activeGenre.value !== undefined && activeGenre.value[0] !== '' ? activeGenre.value.map(el => genres.value.find(genre => genre.id == el)) : []
         
         genres.value = genres.value.filter((el) => !activeGenre.value?.includes(el))
