@@ -8,10 +8,6 @@
     const { getGenres } = useMoviesStore()
     const { genres } = storeToRefs(useMoviesStore())
     const loading = ref(true)
-
-    watch(activeGenre, () => {
-        router.push({ query: { genre: activeGenre.value?.map(el => el?.id).toString()} })
-    }, { deep: true})
     
     onMounted(async () => {
         await getGenres()
@@ -23,18 +19,30 @@
         loading.value = false
     })
 
-    const removeGenre = async (genre) => {
+    const removeGenre = (genre) => {
         genres.value.push(genre)
         genres.value = genres.value.sort((a, b) => a.name.localeCompare(b.name))
 
         activeGenre.value = activeGenre.value.filter((el) => el.id != genre.id)
+        
+        router.push({
+            query: {
+                genre: activeGenre.value.map(el => el.id).toString()
+            }
+        })
     }
 
-    const addGenre = async (genre) => {
+    const addGenre = (genre) => {
         activeGenre.value.push(genre)
         activeGenre.value = activeGenre.value.sort((a, b) => a.name.localeCompare(b.name))
 
         genres.value = genres.value.filter((el) => el.id != genre.id)
+        
+        router.push({
+            query: {
+                genre: activeGenre.value.map(el => el.id).toString()
+            }
+        })
     }
 </script>
 
