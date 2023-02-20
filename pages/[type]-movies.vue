@@ -1,42 +1,35 @@
 <script setup>
-    import { storeToRefs } from 'pinia';
     import { useMoviesStore } from '../store/MoviesStore'
 
-    const router = useRouter()
-    const { type } = useRoute().params
-    const { genre } = useRoute().query
-    const activeGenre = ref(genre?.split(','))
-    const { getPopularMovies, getTopMovies, getGenres } = useMoviesStore()
-    const { genres } = storeToRefs(useMoviesStore())
+    const route = useRoute()
+    const { type } = route.params
+    const { genre } = route.query
+    const { getPopularMovies, getTopMovies } = useMoviesStore()
     const movies = ref([])
     const page = ref(1)
     const totalPages = ref(0)
     const loadingList = ref(true)
     const loadingMore = ref(false)
 
-    watch(activeGenre, () => {
-        router.push({ query: { genre: activeGenre.value?.map(el => el?.id).toString()} })
-    }, { deep: true})
+    watch(() => route.query, (query) => {
+        movies.value = []
+        
+        getMovies(1, query.genre)
+    })
     
     onMounted(async () => {
-        await getGenres()
-
-        activeGenre.value = activeGenre.value !== undefined && activeGenre.value[0] !== '' ? activeGenre.value.map(el => genres.value.find(genre => genre.id == el)) : []
-        
-        genres.value = genres.value.filter((el) => !activeGenre.value?.includes(el))
-
-        getMovies(1)
+        await getMovies(1, genre)
 
         loadingList.value = false
     })
 
-    const getMovies = async (reqPage) => {
+    const getMovies = async (reqPage, genre) => {
         let appendMovies = []
 
         if (type == 'popular') {
-            appendMovies = await getPopularMovies({ page: reqPage, genres: activeGenre.value.map(el => el?.id).toString() })
+            appendMovies = await getPopularMovies({ page: reqPage, genres: genre })
         } else if (type == 'top') {
-            appendMovies = await getTopMovies({ page: reqPage, genres: activeGenre.value.map(el => el?.id).toString() })
+            appendMovies = await getTopMovies({ page: reqPage, genres: genre })
         }
 
         page.value = appendMovies.page
@@ -49,41 +42,9 @@
         loadingMore.value = true
         page.value += 1
 
-        getMovies(page.value)
+        getMovies(page.value, genre)
         
         loadingMore.value = false
-    }
-
-    const removeGenre = async (genre) => {
-        page.value = 1
-        loadingList.value = true
-
-        genres.value.push(genre)
-        genres.value = genres.value.sort((a, b) => a.name.localeCompare(b.name))
-
-        activeGenre.value = activeGenre.value.filter((el) => el.id != genre.id)
-
-        movies.value = []
-
-        await getMovies(page.value)
-
-        loadingList.value = false
-    }
-
-    const addGenre = async (genre) => {
-        page.value = 1
-        loadingList.value = true
-
-        activeGenre.value.push(genre)
-        activeGenre.value = activeGenre.value.sort((a, b) => a.name.localeCompare(b.name))
-
-        genres.value = genres.value.filter((el) => el.id != genre.id)
-        
-        movies.value = []
-
-        await getMovies(page.value)
-
-        loadingList.value = false
     }
 </script>
 
@@ -99,13 +60,7 @@
             <div class="list-middle-left">
                 <h2>Filter by genre</h2>
 
-                <div>
-                    <Filter class="active" v-for="genre in activeGenre" @click="removeGenre(genre)" :text="genre.name" />
-                </div>
-
-                <div>
-                    <Filter class="list-middle-left-genre" v-for="genre in genres" @click="addGenre(genre)" :text="genre.name" />
-                </div>
+                <Filter class="list-middle-left-genre" />
             </div>
             
             <div class="list-middle-right">
@@ -179,18 +134,5 @@
     }
     .movie-list {
         width: 100%;
-    }
-
-    .active {
-        background: #212121;
-        color: white;
-    }
-    
-    .active:before {
-        background-color: white;
-    }
-    
-    .active:hover {
-        color: black;
     }
 </style>
